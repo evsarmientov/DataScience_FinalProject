@@ -1,0 +1,9 @@
+requests>=2.31
+beautifulsoup4>=4.12
+
+# Se agregaran a medida que se construya el resto del prototipo:
+# streamlit
+# anthropic
+# geopandas
+# folium
+# pytest
