@@ -1,0 +1,116 @@
+{
+  "_nota": "DATOS DE DEMO — reemplazar con scraping real de portal.inen.sld.pe y verificacion CMP (cmp.org.pe/verificacion).",
+  "_fuente_real": "Para produccion: scrapear https://portal.inen.sld.pe/directorio-medico/ y https://cmp.org.pe/verificacion/",
+  "medicos": [
+    {
+      "id": "001",
+      "nombre": "Dra. Rosa Vallejos Atencio",
+      "cmp": "45123",
+      "especialidad": "Oncología Médica",
+      "subespecialidad": "Ginecología Oncológica · Cáncer de cérvix y ovario",
+      "modulo_inen": "2",
+      "formacion": "UNMSM · Fellowship Instituto Nacional del Cáncer (México)",
+      "clinicas_privadas": ["Clínica Delgado", "Oncosalud San Isidro"],
+      "horario_inen": "Lun, Mié, Vie — 8:00 am a 1:00 pm"
+    },
+    {
+      "id": "002",
+      "nombre": "Dr. Marco Cárdenas Palomino",
+      "cmp": "38901",
+      "especialidad": "Oncología Médica",
+      "subespecialidad": "Mastología · Cáncer de mama",
+      "modulo_inen": "2",
+      "formacion": "UPCH · Maestría en Oncología UNAM",
+      "clinicas_privadas": ["Clínica San Felipe", "Clínica Internacional Miraflores"],
+      "horario_inen": "Mar, Jue — 8:00 am a 2:00 pm"
+    },
+    {
+      "id": "003",
+      "nombre": "Dr. José Mendoza Quispe",
+      "cmp": "52076",
+      "especialidad": "Oncología Médica",
+      "subespecialidad": "Oncología Digestiva · Cáncer gástrico y colorrectal",
+      "modulo_inen": "3",
+      "formacion": "UNMSM · Fellowship Hospital Vall d'Hebron (España)",
+      "clinicas_privadas": ["Clínica Anglo Americana"],
+      "horario_inen": "Lun a Jue — 7:30 am a 1:00 pm"
+    },
+    {
+      "id": "004",
+      "nombre": "Dra. Patricia Huamán Soto",
+      "cmp": "41887",
+      "especialidad": "Oncología Médica",
+      "subespecialidad": "Tumores hepáticos y de páncreas",
+      "modulo_inen": "3",
+      "formacion": "UPCH · Doctorado Universidad de Chile",
+      "clinicas_privadas": ["Oncosalud Miraflores", "Clínica Ricardo Palma"],
+      "horario_inen": "Mié, Vie — 8:00 am a 1:00 pm"
+    },
+    {
+      "id": "005",
+      "nombre": "Dr. Álvaro Tello Vera",
+      "cmp": "29345",
+      "especialidad": "Oncología de Cabeza y Cuello",
+      "subespecialidad": "Tumores de tiroides, laringe y pulmón",
+      "modulo_inen": "1",
+      "formacion": "UNMSM · Subespecialidad MD Anderson Cancer Center (EE.UU.)",
+      "clinicas_privadas": ["Clínica Javier Prado", "Clínica Delgado"],
+      "horario_inen": "Lun, Mar, Jue — 8:00 am a 1:00 pm"
+    },
+    {
+      "id": "006",
+      "nombre": "Dra. Carmen Flores Ramos",
+      "cmp": "60412",
+      "especialidad": "Oncología Torácica",
+      "subespecialidad": "Cáncer de pulmón · Mesotelioma",
+      "modulo_inen": "1",
+      "formacion": "UPCH · Fellowship Instituto Oncológico de Lyon (Francia)",
+      "clinicas_privadas": ["Clínica Angloamericana"],
+      "horario_inen": "Mar, Jue, Vie — 8:00 am a 12:00 pm"
+    },
+    {
+      "id": "007",
+      "nombre": "Dr. Ricardo Aguirre Llanos",
+      "cmp": "35560",
+      "especialidad": "Hematología Oncológica",
+      "subespecialidad": "Linfomas · Leucemias · Mieloma múltiple",
+      "modulo_inen": "4",
+      "formacion": "UNMSM · Subespecialidad Hospital Clínic Barcelona",
+      "clinicas_privadas": ["Oncosalud San Isidro", "Clínica San Borja"],
+      "horario_inen": "Lun a Vie — 7:30 am a 1:00 pm"
+    },
+    {
+      "id": "008",
+      "nombre": "Dra. Luz Marina Torres Ccahuana",
+      "cmp": "48230",
+      "especialidad": "Oncología Urológica",
+      "subespecialidad": "Cáncer de próstata, riñón y vejiga",
+      "modulo_inen": "4",
+      "formacion": "UNMSM · Fellowship Hospital Universitario La Paz (Madrid)",
+      "clinicas_privadas": ["Clínica Montefiori", "Clínica Internacional San Borja"],
+      "horario_inen": "Lun, Mié, Vie — 8:00 am a 1:00 pm"
+    },
+    {
+      "id": "009",
+      "nombre": "Dr. Eduardo Paredes Neyra",
+      "cmp": "31124",
+      "especialidad": "Oncología Médica",
+      "subespecialidad": "Sarcomas · Tumores de tejidos blandos y hueso",
+      "modulo_inen": "4",
+      "formacion": "UPCH · Maestría en Oncología UAM (España)",
+      "clinicas_privadas": ["Clínica San Felipe"],
+      "horario_inen": "Mar, Jue — 7:30 am a 12:00 pm"
+    },
+    {
+      "id": "010",
+      "nombre": "Dr. Andrés Villaverde Cruz",
+      "cmp": "55891",
+      "especialidad": "Oncología Médica — Admisión y Orientación",
+      "subespecialidad": "Primera consulta · Diagnóstico no especificado",
+      "modulo_inen": "0",
+      "formacion": "UNMSM · Especialidad en Oncología Clínica INEN",
+      "clinicas_privadas": [],
+      "horario_inen": "Lun a Vie — 7:00 am a 1:00 pm"
+    }
+  ]
+}

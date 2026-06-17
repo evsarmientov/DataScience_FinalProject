@@ -17,6 +17,7 @@ data/*.json
 !data/.gitkeep
 !data/inen_modulos.json
 !data/estudios_por_modulo.json
+!data/medicos_inen.json
 
 # Editor / OS
 .vscode/
