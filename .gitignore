@@ -16,6 +16,7 @@ data/*.csv
 data/*.json
 !data/.gitkeep
 !data/inen_modulos.json
+!data/estudios_por_modulo.json
 
 # Editor / OS
 .vscode/

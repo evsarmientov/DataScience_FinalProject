@@ -1,0 +1,40 @@
+{
+  "_nota": "Lista base de estudios por modulo. Claude la refina para el diagnostico especifico cuando hay API key.",
+  "por_modulo": {
+    "0": {
+      "imagen":     ["Radiografía de tórax AP y lateral", "Ecografía de la zona afectada (si aplica)"],
+      "patologia":  ["Biopsia del tumor primario (si aún no tiene resultado de anatomía patológica)"],
+      "laboratorio":["Hemograma completo", "Perfil bioquímico (glucosa, creatinina, TGO, TGP)", "Grupo sanguíneo y factor Rh"],
+      "otros":      [],
+      "nota": "El médico de admisión indicará los estudios adicionales según lo que encuentre en consulta."
+    },
+    "1": {
+      "imagen":     ["TAC de tórax con contraste", "TAC de cuello con contraste (tumores de cabeza/cuello)", "Ecografía cervical (tiroides, nódulos)"],
+      "patologia":  ["Biopsia del tumor primario con resultado de anatomía patológica", "Broncoscopía + biopsia (si es tumor de pulmón)"],
+      "laboratorio":["Hemograma completo", "Perfil bioquímico", "TSH y T4 libre (tiroides)", "Marcadores: CEA, SCC (según tumor)"],
+      "otros":      ["Laringoscopía indirecta (laringe/faringe)", "Nasofibrolaringoscopía (nasofaringe)"],
+      "nota": "Si ya tienes el resultado de la biopsia, tráelo aunque sea de otro hospital."
+    },
+    "2": {
+      "imagen":     ["Ecografía pélvica transvaginal (útero/ovario)", "Mamografía bilateral (mama)", "Ecografía mamaria", "TAC abdomen-pelvis con contraste (estadificación)"],
+      "patologia":  ["Biopsia cervical con resultado histológico (cérvix)", "Biopsia core o BAG de mama (mama)", "Legrado endometrial o biopsia (endometrio)", "PAP con colposcopía (cérvix)"],
+      "laboratorio":["Hemograma completo", "CA-125 (ovario)", "CA 15-3 (mama)", "Perfil bioquímico"],
+      "otros":      ["Colposcopía (cérvix/vagina/vulva)"],
+      "nota": "Para tumores de mama: trae mamografía + ecografía mamaria + biopsia core juntos."
+    },
+    "3": {
+      "imagen":     ["TAC de abdomen con contraste (trifásico para hígado)", "Ecografía abdominal", "Radiografía de tórax"],
+      "patologia":  ["Biopsia con resultado de anatomía patológica", "Endoscopía digestiva alta + biopsia (esófago/estómago)", "Colonoscopía + biopsia (colon/recto)"],
+      "laboratorio":["Hemograma completo", "Perfil bioquímico", "CEA", "CA 19-9 (páncreas/vías biliares)", "AFP (hígado)", "CA 72-4 (gástrico)"],
+      "otros":      ["Endoscopía digestiva alta con biopsia (si no tiene)", "Colonoscopía total (colon/recto)"],
+      "nota": "Fundamental traer el informe completo de la endoscopía y el resultado histológico."
+    },
+    "4": {
+      "imagen":     ["TAC de tórax-abdomen-pelvis con contraste (estadificación)", "PET scan (linfomas, si disponible)", "RMN (sarcomas de tejidos blandos o sistema nervioso)", "Ecografía renal/vesical (tumores urológicos)"],
+      "patologia":  ["Biopsia del tumor / ganglio con inmunohistoquímica", "Biopsia de médula ósea (leucemias/linfomas)", "Citología de LCR si hay compromiso neurológico"],
+      "laboratorio":["Hemograma completo con fórmula diferencial", "LDH", "Beta-2 microglobulina (linfomas/mieloma)", "PSA (próstata)", "Beta-HCG y AFP (testículo)", "Proteína de Bence Jones (mieloma)", "Perfil de coagulación"],
+      "otros":      ["Biopsia de médula ósea (leucemias)", "Cistoscopía (vejiga)"],
+      "nota": "Para linfomas/leucemias: el hemograma completo es el primer estudio. Para sarcomas: la RMN define mejor el tumor que el TAC."
+    }
+  }
+}
