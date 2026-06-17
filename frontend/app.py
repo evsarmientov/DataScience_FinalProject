@@ -1,5 +1,5 @@
 """
-CitaCorrecta — frontend Streamlit (3 tabs)
+MédiRuta — frontend Streamlit (3 tabs)
 Tab 1: Diagnóstico → Módulo → Documentos → Estudios
 Tab 2: Directorio de médicos del INEN
 Tab 3: Medicamentos para tu diagnóstico
@@ -50,13 +50,6 @@ MODULO_ETIQUETAS = {
     "4": "Tejidos Blandos y Hematología",
 }
 
-EJEMPLOS = [
-    ("Cáncer de cuello uterino estadio IIA", "C53"),
-    ("Adenocarcinoma gástrico antral", "C16"),
-    ("Linfoma no Hodgkin difuso de células B", "C83"),
-    ("Cáncer de pulmón células no pequeñas", "C34"),
-    ("Tumor de mama derecha", "C50"),
-]
 
 @st.cache_data(show_spinner=False)
 def cargar_medicos() -> list[dict]:
@@ -86,7 +79,7 @@ def crear_mapa(lat, lng, nombre):
 # ---------------------------------------------------------------------------
 
 st.set_page_config(
-    page_title="CitaCorrecta",
+    page_title="MédiRuta",
     page_icon="🏥",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -156,8 +149,8 @@ st.markdown("""
 # Header
 # ---------------------------------------------------------------------------
 
-st.markdown("# 🏥 CitaCorrecta")
-st.markdown("*Llega a la cita correcta, con los papeles correctos, a la primera.*")
+st.markdown("# 🏥 MédiRuta")
+st.markdown("*Tu ruta exacta al especialista correcto.*")
 st.divider()
 
 # ---------------------------------------------------------------------------
@@ -202,33 +195,19 @@ with tab1:
             label_visibility="collapsed",
         )
 
-        diagnostico_texto = st.session_state.get("_diag_prefill", "")
-        cie10_texto = st.session_state.get("_cie_prefill", "")
-
         if modo == "✍️ Texto libre":
             col_d, col_c = st.columns([3, 1])
             with col_d:
                 diagnostico_texto = st.text_area(
                     "Diagnóstico",
-                    value=diagnostico_texto,
                     placeholder="Ej: Cáncer de cuello uterino estadio IIA",
                     height=90,
                 )
             with col_c:
                 cie10_texto = st.text_input(
                     "CIE-10 (opcional)",
-                    value=cie10_texto,
                     placeholder="Ej: C53",
                 ).strip()
-
-            st.caption("Prueba rápida:")
-            cols_ej = st.columns(len(EJEMPLOS))
-            for i, (diag, cie) in enumerate(EJEMPLOS):
-                label_ej = diag.split(" ")[1] if diag.startswith("Cáncer") else diag.split(" ")[0]
-                if cols_ej[i].button(label_ej, key=f"ej_{i}", use_container_width=True):
-                    st.session_state["_diag_prefill"] = diag
-                    st.session_state["_cie_prefill"] = cie
-                    st.rerun()
         else:
             archivo = st.file_uploader(
                 "Sube la foto (JPG / PNG)",
@@ -358,7 +337,7 @@ with tab1:
 
         st.divider()
         st.caption(
-            "CitaCorrecta · Proyecto final Data Science con Python · Universidad del Pacífico 2026-I  \n"
+            "MédiRuta · Proyecto final Data Science con Python · Universidad del Pacífico 2026-I  \n"
             "Herramienta orientativa. Confirma la información con el INEN antes de acudir."
         )
 
@@ -507,5 +486,5 @@ with tab3:
         "exclusivamente el médico oncólogo según tu caso específico. No te automediques."
     )
     st.caption(
-        "CitaCorrecta · Proyecto final Data Science con Python · Universidad del Pacífico 2026-I"
+        "MédiRuta · Proyecto final Data Science con Python · Universidad del Pacífico 2026-I"
     )

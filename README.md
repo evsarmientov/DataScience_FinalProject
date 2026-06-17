@@ -1,6 +1,6 @@
-# CitaCorrecta
+# MédiRuta
 
-> Ayudamos a pacientes peruanos a llegar a la cita correcta, con los papeles correctos, a la primera.
+> Tu ruta exacta al especialista correcto.
 
 ## El problema
 
@@ -34,7 +34,7 @@ Como soy solo founder, así cubro los roles clásicos con agentes de IA:
 
 ```bash
 git clone <url-de-este-repo>
-cd CitaCorrecta
+cd MédiRuta
 pip install -r requirements.txt
 cp .env.example .env   # y completa tus claves ahí (nunca subas .env real)
 python backend/app/scraping/requisitos_scraper.py
@@ -43,7 +43,7 @@ python backend/app/scraping/requisitos_scraper.py
 ## Estructura del repositorio
 
 ```
-CitaCorrecta/
+MédiRuta/
 ├── README.md
 ├── LICENSE
 ├── .env.example

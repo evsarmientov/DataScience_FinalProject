@@ -13,7 +13,7 @@ import re
 from bs4 import BeautifulSoup
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (compatible; CitaCorrectaBot/0.1; "
+    "User-Agent": "Mozilla/5.0 (compatible; MédiRutaBot/0.1; "
     "+https://github.com/tu-usuario/tu-repo)"
 }
 
