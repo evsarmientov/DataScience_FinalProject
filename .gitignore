@@ -15,6 +15,7 @@ venv/
 data/*.csv
 data/*.json
 !data/.gitkeep
+!data/inen_modulos.json
 
 # Editor / OS
 .vscode/
