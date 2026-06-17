@@ -1,4 +1,4 @@
-# MédiRuta
+# MediRuta
 
 > Tu ruta exacta al especialista correcto.
 
@@ -34,7 +34,7 @@ Como soy solo founder, así cubro los roles clásicos con agentes de IA:
 
 ```bash
 git clone <url-de-este-repo>
-cd MédiRuta
+cd MediRuta
 pip install -r requirements.txt
 cp .env.example .env   # y completa tus claves ahí (nunca subas .env real)
 python backend/app/scraping/requisitos_scraper.py
@@ -43,7 +43,7 @@ python backend/app/scraping/requisitos_scraper.py
 ## Estructura del repositorio
 
 ```
-MédiRuta/
+MediRuta/
 ├── README.md
 ├── LICENSE
 ├── .env.example

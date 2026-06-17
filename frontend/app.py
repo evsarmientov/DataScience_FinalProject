@@ -1,5 +1,5 @@
 """
-MédiRuta — frontend Streamlit (3 tabs)
+MediRuta — frontend Streamlit (3 tabs)
 Tab 1: Diagnóstico → Módulo → Documentos → Estudios
 Tab 2: Directorio de médicos del INEN
 Tab 3: Medicamentos para tu diagnóstico
@@ -79,7 +79,7 @@ def crear_mapa(lat, lng, nombre):
 # ---------------------------------------------------------------------------
 
 st.set_page_config(
-    page_title="MédiRuta",
+    page_title="MediRuta",
     page_icon="🏥",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -149,7 +149,7 @@ st.markdown("""
 # Header
 # ---------------------------------------------------------------------------
 
-st.markdown("# 🏥 MédiRuta")
+st.markdown("# 🏥 MediRuta")
 st.markdown("*Tu ruta exacta al especialista correcto.*")
 st.divider()
 
@@ -337,7 +337,7 @@ with tab1:
 
         st.divider()
         st.caption(
-            "MédiRuta · Proyecto final Data Science con Python · Universidad del Pacífico 2026-I  \n"
+            "MediRuta · Proyecto final Data Science con Python · Universidad del Pacífico 2026-I  \n"
             "Herramienta orientativa. Confirma la información con el INEN antes de acudir."
         )
 
@@ -486,5 +486,5 @@ with tab3:
         "exclusivamente el médico oncólogo según tu caso específico. No te automediques."
     )
     st.caption(
-        "MédiRuta · Proyecto final Data Science con Python · Universidad del Pacífico 2026-I"
+        "MediRuta · Proyecto final Data Science con Python · Universidad del Pacífico 2026-I"
     )
