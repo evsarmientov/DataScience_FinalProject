@@ -1,0 +1,8 @@
+requests>=2.31
+beautifulsoup4>=4.12
+streamlit>=1.35
+anthropic>=0.30
+folium>=0.17
+streamlit-folium>=0.20
+python-dotenv>=1.0
+pytest>=8.0
