@@ -247,6 +247,7 @@ with tab1:
         st.session_state["resultado"] = resultado
         st.session_state["diagnostico_usado"] = diagnostico_texto.strip()
         st.session_state["modulo_nombre"] = resultado["nombre"]
+        st.toast("¡Resultados listos! Desplázate hacia abajo ↓", icon="✅")
 
     if "resultado" in st.session_state:
         resultado = st.session_state["resultado"]
