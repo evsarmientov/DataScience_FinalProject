@@ -198,10 +198,9 @@ with tab1:
         if modo == "✍️ Texto libre":
             col_d, col_c = st.columns([3, 1])
             with col_d:
-                diagnostico_texto = st.text_area(
+                diagnostico_texto = st.text_input(
                     "Diagnóstico",
                     placeholder="Ej: Cáncer de cuello uterino estadio IIA",
-                    height=90,
                 )
             with col_c:
                 cie10_texto = st.text_input(
@@ -242,6 +241,9 @@ with tab1:
 
     # --- Resultados Tab 1 ---
     if buscar:
+        if len(diagnostico_texto.strip()) < 4:
+            st.error("Diagnóstico no reconocido. Intente con más detalle (ej: 'cáncer de pulmón', 'linfoma no Hodgkin').")
+            st.stop()
         with st.spinner("Analizando tu diagnóstico…"):
             resultado = clasificar(diagnostico_texto.strip(), cie10_texto or None)
         st.session_state["resultado"] = resultado
