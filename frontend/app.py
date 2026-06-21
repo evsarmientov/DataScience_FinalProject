@@ -198,10 +198,9 @@ with tab1:
         if modo == "✍️ Texto libre":
             col_d, col_c = st.columns([3, 1])
             with col_d:
-                diagnostico_texto = st.text_area(
+                diagnostico_texto = st.text_input(
                     "Diagnóstico",
                     placeholder="Ej: Cáncer de cuello uterino estadio IIA",
-                    height=90,
                 )
             with col_c:
                 cie10_texto = st.text_input(
@@ -242,11 +241,15 @@ with tab1:
 
     # --- Resultados Tab 1 ---
     if buscar:
+        if len(diagnostico_texto.strip()) < 4:
+            st.error("Diagnóstico no reconocido. Intente con más detalle (ej: 'cáncer de pulmón', 'linfoma no Hodgkin').")
+            st.stop()
         with st.spinner("Analizando tu diagnóstico…"):
             resultado = clasificar(diagnostico_texto.strip(), cie10_texto or None)
         st.session_state["resultado"] = resultado
         st.session_state["diagnostico_usado"] = diagnostico_texto.strip()
         st.session_state["modulo_nombre"] = resultado["nombre"]
+        st.toast("¡Resultados listos! Desplázate hacia abajo ↓", icon="✅")
 
     if "resultado" in st.session_state:
         resultado = st.session_state["resultado"]
@@ -346,22 +349,37 @@ with tab1:
 # ============================================================
 with tab2:
     st.markdown("### Médicos del INEN")
-    st.caption("Busca por nombre, especialidad o módulo. Datos de demo — fuente real: portal.inen.sld.pe y CMP.")
+    st.caption(
+        "Directorio oficial extraído del Portal de Transparencia del INEN (Ley N°27806) · "
+        "Relación de Personal Nombrado 2023"
+    )
 
     medicos = cargar_medicos()
+
+    # Pre-seleccionar módulo si viene de Tab 1
+    modulo_desde_tab1 = None
+    if "resultado" in st.session_state:
+        modulo_desde_tab1 = st.session_state["resultado"]["id"]
 
     # Filtros
     fc1, fc2 = st.columns([2, 2])
     with fc1:
         busqueda = st.text_input(
-            "🔍 Buscar por nombre o especialidad",
-            placeholder="Ej: Cardenas, Ginecología, Mama…",
+            "🔍 Buscar por nombre o departamento",
+            placeholder="Ej: Abugattas, Abdomen, Ginecológica…",
         ).lower()
     with fc2:
         opciones_modulo = ["Todos los módulos"] + [
             f"Módulo {k} — {v}" for k, v in MODULO_ETIQUETAS.items()
         ]
-        filtro_modulo = st.selectbox("Filtrar por módulo", opciones_modulo)
+        # Pre-seleccionar módulo desde Tab 1
+        idx_default = 0
+        if modulo_desde_tab1:
+            for i, op in enumerate(opciones_modulo):
+                if op.startswith(f"Módulo {modulo_desde_tab1}"):
+                    idx_default = i
+                    break
+        filtro_modulo = st.selectbox("Filtrar por módulo", opciones_modulo, index=idx_default)
 
     modulo_sel = None
     if filtro_modulo != "Todos los módulos":
@@ -370,8 +388,10 @@ with tab2:
     # Filtrar
     resultado_medicos = [
         m for m in medicos
-        if (not busqueda or busqueda in m["nombre"].lower() or busqueda in m["especialidad"].lower()
-            or busqueda in m["subespecialidad"].lower())
+        if (not busqueda
+            or busqueda in m["nombre"].lower()
+            or busqueda in m.get("area", "").lower()
+            or busqueda in m.get("dependencia", "").lower())
         and (modulo_sel is None or m["modulo_inen"] == modulo_sel)
     ]
 
@@ -383,28 +403,34 @@ with tab2:
         for idx, m in enumerate(resultado_medicos):
             color = MODULO_COLORES.get(m["modulo_inen"], "#333")
             etiqueta_mod = MODULO_ETIQUETAS.get(m["modulo_inen"], "")
-            clinicas_html = "".join(
-                f'<span class="medico-clinica">🏥 {c}</span>' for c in m.get("clinicas_privadas", [])
-            ) or '<span style="color:#999;font-size:0.8rem">Solo INEN</span>'
+            area_display = m.get("area", "INEN")
+            dep_display = m.get("dependencia", "")
+            cargo_display = m.get("cargo", "Médico Especialista")
+            cmp_html = f"<b>CMP {m['cmp']}</b> · " if m.get("cmp") else ""
+            clinicas = m.get("clinicas_privadas", [])
+            clinicas_html = (
+                "".join(f'<span class="medico-clinica">🏥 {c}</span>' for c in clinicas)
+                if clinicas else ""
+            )
             with cols_med[idx % 2]:
                 st.markdown(
                     f'<div class="medico-card">'
                     f'<span class="pill-modulo" style="background:{color}">Módulo {m["modulo_inen"]} · {etiqueta_mod}</span><br>'
                     f'<h4>{m["nombre"]}</h4>'
-                    f'<small><b>CMP {m["cmp"]}</b> · {m["especialidad"]}</small><br>'
-                    f'<small style="color:#444;margin-top:0.3rem;display:block">{m["subespecialidad"]}</small>'
-                    f'<small style="color:#555;margin-top:0.3rem;display:block">🎓 {m["formacion"]}</small>'
-                    f'<small style="color:#555;display:block;margin-top:0.2rem">🕖 INEN: {m.get("horario_inen","—")}</small>'
-                    f'<div style="margin-top:0.5rem"><small><b>También atiende en:</b></small><br>{clinicas_html}</div>'
-                    f'</div>',
+                    f'<small>{cmp_html}{cargo_display}</small><br>'
+                    f'<small style="color:#444;margin-top:0.3rem;display:block">🏥 {area_display}</small>'
+                    + (f'<small style="color:#666;display:block">↳ {dep_display}</small>' if dep_display else "")
+                    + f'<small style="color:#555;display:block;margin-top:0.3rem">🕖 {m.get("horario_inen","Consultar en admisión INEN")}</small>'
+                    + (f'<div style="margin-top:0.5rem">{clinicas_html}</div>' if clinicas_html else "")
+                    + f'</div>',
                     unsafe_allow_html=True,
                 )
 
     st.divider()
     st.caption(
-        "¿Quieres verificar el CMP de un médico? → "
+        "¿Quieres verificar el número CMP de un médico? → "
         "[cmp.org.pe/verificacion](https://cmp.org.pe/verificacion/)  \n"
-        "Datos de demo — en producción se actualiza desde el portal oficial del INEN y el registro CMP."
+        "Fuente: portal.inen.sld.pe/informacion-de-personal/ · Relación de Personal Nombrado (Transparencia INEN)"
     )
 
 # ============================================================
