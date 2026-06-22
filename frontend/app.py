@@ -406,6 +406,7 @@ with tab2:
             area_display = m.get("area", "INEN")
             dep_display = m.get("dependencia", "")
             cargo_display = m.get("cargo", "Médico Especialista")
+            formacion_display = m.get("formacion", "")
             cmp_html = f"<b>CMP {m['cmp']}</b> · " if m.get("cmp") else ""
             clinicas = m.get("clinicas_privadas", [])
             clinicas_html = (
@@ -420,8 +421,9 @@ with tab2:
                     f'<small>{cmp_html}{cargo_display}</small><br>'
                     f'<small style="color:#444;margin-top:0.3rem;display:block">🏥 {area_display}</small>'
                     + (f'<small style="color:#666;display:block">↳ {dep_display}</small>' if dep_display else "")
+                    + (f'<small style="color:#555;margin-top:0.3rem;display:block">🎓 {formacion_display}</small>' if formacion_display else "")
                     + f'<small style="color:#555;display:block;margin-top:0.3rem">🕖 {m.get("horario_inen","Consultar en admisión INEN")}</small>'
-                    + (f'<div style="margin-top:0.5rem">{clinicas_html}</div>' if clinicas_html else "")
+                    + (f'<div style="margin-top:0.5rem"><small><b>También atiende en:</b></small><br>{clinicas_html}</div>' if clinicas_html else "")
                     + f'</div>',
                     unsafe_allow_html=True,
                 )
