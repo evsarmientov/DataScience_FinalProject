@@ -151,6 +151,12 @@ st.markdown("""
 
 st.markdown("# 🏥 MediRuta")
 st.markdown("*Tu ruta exacta al especialista correcto.*")
+st.warning(
+    "⚠️ **Herramienta orientativa.** La información que muestra MediRuta es una guía "
+    "preliminar basada en datos públicos. Cualquier consulta médica real debe hacerla "
+    "con un profesional de salud. No reemplaza la atención médica.",
+    icon=None,
+)
 st.divider()
 
 # ---------------------------------------------------------------------------
@@ -168,76 +174,66 @@ tab1, tab2, tab3 = st.tabs([
 # ============================================================
 with tab1:
     datos_hospital = _cargar_datos()
-    col_input, col_guia = st.columns([3, 2], gap="large")
 
-    with col_guia:
-        st.markdown("### Módulos del INEN")
-        st.caption("Referencia — el sistema te dice cuál es el tuyo")
-        for m in datos_hospital["modulos"]:
-            color = MODULO_COLORES.get(m["id"], "#333")
-            label = m["nombre"].split("—")[1].strip() if "—" in m["nombre"] else m["nombre"]
-            st.markdown(
-                f'<div class="modulo-mini" style="--mc:{color}">'
-                f'<strong>Módulo {m["id"]} — {label}</strong>'
-                f'<small>{m["descripcion"][:85]}…</small>'
-                f'<small style="color:{color}">👨‍⚕️ {m["medicos_especialidad"]}</small>'
-                f'</div>',
-                unsafe_allow_html=True,
+    st.markdown("### Ingresa tu diagnóstico")
+
+    modo = st.radio(
+        "Modo:",
+        ["✍️ Texto libre", "📷 Foto de la hoja de referencia"],
+        horizontal=True,
+        label_visibility="collapsed",
+    )
+
+    diagnostico_texto = ""
+    cie10_texto = ""
+
+    if modo == "✍️ Texto libre":
+        col_d, col_c, col_btn = st.columns([4, 1, 2], gap="small")
+        with col_d:
+            diagnostico_texto = st.text_input(
+                "Diagnóstico",
+                placeholder="Ej: Cáncer de cuello uterino estadio IIA",
+                label_visibility="collapsed",
             )
-
-    with col_input:
-        st.markdown("### Ingresa tu diagnóstico")
-
-        modo = st.radio(
-            "Modo:",
-            ["✍️ Texto libre", "📷 Foto de la hoja de referencia"],
-            horizontal=True,
-            label_visibility="collapsed",
+        with col_c:
+            cie10_texto = st.text_input(
+                "CIE-10",
+                placeholder="C53",
+                label_visibility="collapsed",
+            ).strip()
+        with col_btn:
+            buscar = st.button(
+                "🔍 Ver mi ruta",
+                type="primary",
+                use_container_width=True,
+                disabled=not diagnostico_texto.strip(),
+            )
+    else:
+        archivo = st.file_uploader(
+            "Sube la foto (JPG / PNG)",
+            type=["jpg", "jpeg", "png", "webp"],
+            help="Solo se usa para extraer el diagnóstico — no se almacena.",
         )
-
-        if modo == "✍️ Texto libre":
-            col_d, col_c = st.columns([3, 1])
-            with col_d:
-                diagnostico_texto = st.text_input(
-                    "Diagnóstico",
-                    placeholder="Ej: Cáncer de cuello uterino estadio IIA",
-                )
-            with col_c:
-                cie10_texto = st.text_input(
-                    "CIE-10 (opcional)",
-                    placeholder="Ej: C53",
-                ).strip()
-        else:
-            archivo = st.file_uploader(
-                "Sube la foto (JPG / PNG)",
-                type=["jpg", "jpeg", "png", "webp"],
-                help="Solo se usa para extraer el diagnóstico — no se almacena.",
-            )
-            if archivo is not None:
-                st.image(archivo, width=380)
-                if not os.environ.get("ANTHROPIC_API_KEY"):
-                    st.warning("Configura ANTHROPIC_API_KEY en tu `.env` para usar OCR.")
+        buscar = False
+        if archivo is not None:
+            st.image(archivo, width=380)
+            if not os.environ.get("ANTHROPIC_API_KEY"):
+                st.warning("Configura ANTHROPIC_API_KEY en tu `.env` para usar OCR.")
+            else:
+                with st.spinner("Leyendo documento con IA…"):
+                    ocr = extraer_diagnostico(archivo.read())
+                if ocr.get("diagnostico"):
+                    st.success("✅ Diagnóstico extraído")
+                    diagnostico_texto = ocr["diagnostico"]
+                    cie10_texto = ocr.get("cie10") or ""
+                    st.info(
+                        f"**Diagnóstico:** {diagnostico_texto}  \n"
+                        f"**CIE-10:** {cie10_texto or '—'}  \n"
+                        f"**Paciente:** {ocr.get('paciente') or '—'}"
+                    )
+                    buscar = st.button("🔍 Ver mi ruta", type="primary")
                 else:
-                    with st.spinner("Leyendo documento con IA…"):
-                        ocr = extraer_diagnostico(archivo.read())
-                    if ocr.get("diagnostico"):
-                        st.success("✅ Diagnóstico extraído")
-                        diagnostico_texto = ocr["diagnostico"]
-                        cie10_texto = ocr.get("cie10") or ""
-                        st.info(
-                            f"**Diagnóstico:** {diagnostico_texto}  \n"
-                            f"**CIE-10:** {cie10_texto or '—'}  \n"
-                            f"**Paciente:** {ocr.get('paciente') or '—'}"
-                        )
-                    else:
-                        st.error("No se pudo leer el documento. Usa el modo texto.")
-
-        buscar = st.button(
-            "🔍 Ver mi módulo y documentos",
-            type="primary",
-            use_container_width=True,
-            disabled=not diagnostico_texto.strip(),
-        )
+                    st.error("No se pudo leer el documento. Usa el modo texto.")
 
     # --- Resultados Tab 1 ---
     if buscar:
@@ -343,6 +339,21 @@ with tab1:
             "MediRuta · Proyecto final Data Science con Python · Universidad del Pacífico 2026-I  \n"
             "Herramienta orientativa. Confirma la información con el INEN antes de acudir."
         )
+
+    # Guía de módulos — al fondo, colapsada por defecto
+    with st.expander("ℹ️ ¿Qué son los módulos del INEN?", expanded=False):
+        st.caption("Referencia del sistema de módulos del INEN")
+        for m in datos_hospital["modulos"]:
+            color = MODULO_COLORES.get(m["id"], "#333")
+            label = m["nombre"].split("—")[1].strip() if "—" in m["nombre"] else m["nombre"]
+            st.markdown(
+                f'<div class="modulo-mini" style="--mc:{color}">'
+                f'<strong>Módulo {m["id"]} — {label}</strong>'
+                f'<small>{m["descripcion"][:85]}…</small>'
+                f'<small style="color:{color}">👨‍⚕️ {m["medicos_especialidad"]}</small>'
+                f'</div>',
+                unsafe_allow_html=True,
+            )
 
 # ============================================================
 # TAB 2 — Directorio de médicos
