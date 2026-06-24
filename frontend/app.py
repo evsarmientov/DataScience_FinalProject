@@ -464,6 +464,7 @@ with tab3:
         diag_t3 = st.text_input(
             "Diagnóstico",
             placeholder="Ej: Cáncer de cuello uterino estadio IIA",
+            key="diag_t3_input",
         )
         mod_nombre_t3 = ""
 
