@@ -95,20 +95,31 @@ Evidencias completas: [`docs/research/01_validacion_usuarios.md`](docs/research/
 
 ## Modelo de negocio
 
-**Freemium B2C + SaaS B2B institucional. El paciente nunca paga.**
+**Tres líneas de ingresos:**
 
-| | Paciente | Institución | Red de Salud |
-|---|---|---|---|
-| **Precio/mes** | Gratis — siempre | S/499 | S/1,499 |
-| Clasificador + documentos + estudios | ✓ | ✓ | ✓ |
-| Directorio médico | ✓ | ✓ | ✓ |
-| API de integración | — | ✓ | ✓ |
-| Analytics de uso | — | ✓ | ✓ |
-| Multi-sede (hasta 5) | — | — | ✓ |
-| Chatbot WhatsApp / Telegram | — | — | ✓ |
-| **Para** | Pacientes y familias | INEN, EsSalud, IRENEs | Redes regionales, EPS, seguros |
+### 1. Paciente — Freemium
+| Feature | Gratis | Premium S/9.90/mes |
+|---|---|---|
+| Clasificador de módulo + documentos + estudios | ✓ | ✓ |
+| Directorio médico (159 médicos) | ✓ | ✓ |
+| Preguntas para el oncólogo | — | ✓ |
+| Búsqueda medicamentos + PNUME | — | ✓ |
+| Guía de costos por seguro (SIS/EsSalud) | — | ✓ |
+| Historial guardado | — | ✓ |
 
-**Margen de contribución Plan Institución: ~90%** (costo variable: ~S/30–50/mes en API calls)
+*Conversión esperada conservadora: 1–2% de usuarios activos.*
+
+### 2. Institucional — SaaS B2B
+S/499/mes (INEN, EsSalud, IRENEs) · S/1,499/mes (redes regionales, EPS, aseguradoras)
+Incluye API de integración, analytics, soporte, chatbot.
+*Ciclo de venta B2B en salud pública: 12–18 meses. No es ingreso inmediato.*
+
+### 3. Publicidad segmentada
+Anuncios de EPS privadas, clínicas oncológicas y farmacias — en el momento exacto que el usuario busca atención.
+*Requiere escala: mínimo ~10,000 usuarios activos/mes para ser atractivo.*
+
+**Costos reales (estimación pesimista):** ~S/3,000–3,200/mes con 10,000 usuarios (API + hosting + legal + mantenimiento).
+**Break-even mixto realista:** 18–24 meses desde lanzamiento.
 
 ---
 

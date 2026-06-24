@@ -72,7 +72,7 @@ def extract_page(client: Anthropic, img_b64: str, page_num: int) -> dict:
     try:
         resp = client.messages.create(
             model="claude-haiku-4-5-20251001",
-            max_tokens=4096,
+            max_tokens=8192,
             messages=[{
                 "role": "user",
                 "content": [
