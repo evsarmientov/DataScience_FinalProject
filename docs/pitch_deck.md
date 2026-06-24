@@ -55,13 +55,15 @@ Estudiante de Economía, Universidad del Pacífico 2026-I.
 
 **Qué construye MediRuta exactamente:**
 
-Una app web con tres módulos:
+Una app web con cuatro módulos:
 
 - **Tab 1 — Diagnóstico y Documentos:** el paciente ingresa su diagnóstico en texto libre o sube una foto de su hoja de referencia. El clasificador híbrido identifica el módulo correcto del INEN (0–5). Un scraper en tiempo real trae los documentos necesarios desde el portal oficial. Claude genera los estudios clínicos que pedirá el especialista.
 
 - **Tab 2 — Directorio médico:** 159 médicos reales del INEN extraídos del Portal de Transparencia Institucional (Ley N°27806). Filtrables por módulo. Cargo verificado. No inventados.
 
-- **Tab 3 — Medicamentos:** primera y segunda línea de tratamiento, más medicamentos de soporte, para que el paciente llegue informado a la primera consulta.
+- **Tab 3 — Preguntas para tu oncólogo:** Claude genera las preguntas clave que el paciente debería hacerle al especialista en la primera consulta, organizadas por categoría: diagnóstico, tratamiento, proceso INEN, efectos secundarios, seguimiento. El paciente llega preparado, no desbordado.
+
+- **Tab 4 — Medicamentos:** el paciente escribe el nombre del medicamento o sube una foto de su receta (OCR). El sistema consulta disponibilidad en SIS y EsSalud, verifica si está en el Petitorio Nacional PNUME, y enlaza a DIGEMID. Sección "Próximamente": farmacia más cercana con stock y precio comparado.
 
 **El insight no obvio:**
 
@@ -136,12 +138,13 @@ La combinación de datos abiertos + LLMs baratos + herramientas de despliegue r�
 **Repositorio:** https://github.com/evsarmientov/DataScience_FinalProject
 
 ### Flujo principal del usuario
-1. Ingresa diagnóstico en texto libre: *"Cáncer de mama estadio II"*
-2. Clasificador híbrido identifica: **Módulo 2 — Ginecología y Mama**
+1. Ingresa diagnóstico en texto libre o sube foto de hoja de referencia (OCR)
+2. Clasificador híbrido identifica: **Módulo 1 — Cabeza, Cuello y Tórax**
 3. Scraper trae en tiempo real los documentos del portal INEN
 4. Claude genera los estudios que pedirá el especialista (imagen, patología, laboratorio)
-5. Tab 2: directorio filtrado por módulo — médicos reales con cargo verificado
-6. Tab 3: primera línea de tratamiento, segunda línea, soporte
+5. Tab 2: directorio filtrado por módulo — 159 médicos reales con cargo verificado
+6. Tab 3: preguntas clave para hacerle al oncólogo en la primera consulta
+7. Tab 4: busca medicamento por nombre o foto de receta → disponibilidad SIS/EsSalud + DIGEMID
 
 ### Diagrama de arquitectura
 
