@@ -13,9 +13,9 @@
 ## 2. Founder
 
 **SARMIENTO VASQUEZ, Evelyn Valeria**
-Estudiante de Economía con especialización en Data Science, Universidad del Pacífico 2026-I.
+Estudiante de Economía, Universidad del Pacífico 2026-I.
 
-**Founder-market fit:** Paciente activa del INEN (en observación desde 2025). Vivió en primera persona el laberinto del sistema: diagnóstico tardío, rechazo por falta de documentos, desorientación dentro del hospital, desinformación sobre especialistas. MediRuta es la herramienta que necesité y no existía.
+**Founder-market fit:** Paciente activa del INEN (desde mayo de 2026). Vivió en primera persona el laberinto del sistema: diagnóstico tardío, rechazo por falta de documentos, desorientación dentro del hospital, desinformación sobre especialistas. MediRuta es la herramienta que necesité y no existía.
 
 **Cobertura de roles como solo founder con IA:**
 - Producto y diseño: decisiones propias basadas en experiencia real de usuario
@@ -55,13 +55,15 @@ Estudiante de Economía con especialización en Data Science, Universidad del Pa
 
 **Qué construye MediRuta exactamente:**
 
-Una app web con tres módulos:
+Una app web con cuatro módulos:
 
 - **Tab 1 — Diagnóstico y Documentos:** el paciente ingresa su diagnóstico en texto libre o sube una foto de su hoja de referencia. El clasificador híbrido identifica el módulo correcto del INEN (0–5). Un scraper en tiempo real trae los documentos necesarios desde el portal oficial. Claude genera los estudios clínicos que pedirá el especialista.
 
 - **Tab 2 — Directorio médico:** 159 médicos reales del INEN extraídos del Portal de Transparencia Institucional (Ley N°27806). Filtrables por módulo. Cargo verificado. No inventados.
 
-- **Tab 3 — Medicamentos:** primera y segunda línea de tratamiento, más medicamentos de soporte, para que el paciente llegue informado a la primera consulta.
+- **Tab 3 — Preguntas para tu oncólogo:** Claude genera las preguntas clave que el paciente debería hacerle al especialista en la primera consulta, organizadas por categoría: diagnóstico, tratamiento, proceso INEN, efectos secundarios, seguimiento. El paciente llega preparado, no desbordado.
+
+- **Tab 4 — Medicamentos:** el paciente escribe el nombre del medicamento o sube una foto de su receta (OCR). El sistema consulta disponibilidad en SIS y EsSalud, verifica si está en el Petitorio Nacional PNUME, y enlaza a DIGEMID. Sección "Próximamente": farmacia más cercana con stock y precio comparado.
 
 **El insight no obvio:**
 
@@ -136,12 +138,13 @@ La combinación de datos abiertos + LLMs baratos + herramientas de despliegue r�
 **Repositorio:** https://github.com/evsarmientov/DataScience_FinalProject
 
 ### Flujo principal del usuario
-1. Ingresa diagnóstico en texto libre: *"Cáncer de mama estadio II"*
-2. Clasificador híbrido identifica: **Módulo 2 — Ginecología y Mama**
+1. Ingresa diagnóstico en texto libre o sube foto de hoja de referencia (OCR)
+2. Clasificador híbrido identifica: **Módulo 1 — Cabeza, Cuello y Tórax**
 3. Scraper trae en tiempo real los documentos del portal INEN
 4. Claude genera los estudios que pedirá el especialista (imagen, patología, laboratorio)
-5. Tab 2: directorio filtrado por módulo — médicos reales con cargo verificado
-6. Tab 3: primera línea de tratamiento, segunda línea, soporte
+5. Tab 2: directorio filtrado por módulo — 159 médicos reales con cargo verificado
+6. Tab 3: preguntas clave para hacerle al oncólogo en la primera consulta
+7. Tab 4: busca medicamento por nombre o foto de receta → disponibilidad SIS/EsSalud + DIGEMID
 
 ### Diagrama de arquitectura
 
@@ -272,11 +275,12 @@ La combinación de datos abiertos + LLMs baratos + herramientas de despliegue r�
 | Evidencia | Detalle |
 |---|---|
 | App en vivo | mediruta.streamlit.app — accesible sin instalación desde el día del deploy |
-| 3 usuarios beta | Probaron el MVP y dieron feedback documentado en `docs/research/` |
-| Bug de UX detectado y corregido | 2 de 3 usuarios identificaron el mismo problema de layout de forma independiente → corregido en v1.1 |
+| **5 usuarios beta** | 3 usuarios generales + 2 familiares de pacientes oncológicos reales del INEN/IREN (llamada y presencial) |
+| Validación de contenido | Familiares de pacientes confirmaron que la información coincide con lo que aprendieron via meses de experiencia — *"esa información nos tomó semanas descubrirla"* |
+| Bug de UX detectado y corregido | 2 de 5 usuarios identificaron el mismo problema de layout de forma independiente → corregido en v1.1 |
+| Señal de roadmap orgánica | 2 usuarios mencionaron expansión a IRENEs regionales sin que se les preguntara — ya en roadmap a 6 meses |
 | 159 médicos verificados | Único directorio médico del INEN con cargos reales y fuente oficial verificable |
-| Datos de transparencia | Única app que usa el PDF de Relación de Personal del INEN (Ley N°27806) como fuente |
-| Founder es usuaria real | Paciente activa del INEN en observación — usa el producto que construyó |
+| Founder es usuaria real | El diagnóstico real de la founder clasifica correctamente en el sistema |
 | Historial de commits | Commits distribuidos durante los 11 días del proyecto (no un solo push el último día) |
 
 ---

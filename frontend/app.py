@@ -21,7 +21,8 @@ load_dotenv()
 from ai.motor_especialidad import clasificar, _cargar_datos
 from ai.ocr_extractor import extraer_diagnostico
 from ai.estudios_extractor import obtener_estudios, CATEGORIAS_LABEL
-from ai.medicamentos_extractor import obtener_medicamentos
+from ai.preguntas_extractor import obtener_preguntas, CATEGORIAS_LABEL as CATEGORIAS_PREGUNTAS
+from ai.medicamentos_search import extraer_medicamento_receta, buscar_disponibilidad
 from backend.app.scraping.requisitos_scraper import scrapear_url
 
 # ---------------------------------------------------------------------------
@@ -163,9 +164,10 @@ st.divider()
 # Tabs
 # ---------------------------------------------------------------------------
 
-tab1, tab2, tab3 = st.tabs([
+tab1, tab2, tab3, tab4 = st.tabs([
     "📋 Diagnóstico y Documentos",
     "👨‍⚕️ Médicos del INEN",
+    "❓ Preguntas para tu oncólogo",
     "💊 Medicamentos",
 ])
 
@@ -447,82 +449,157 @@ with tab2:
     )
 
 # ============================================================
-# TAB 3 — Medicamentos
+# TAB 3 — Preguntas para el oncólogo
 # ============================================================
 with tab3:
-    st.markdown("### Medicamentos para tu diagnóstico")
-    st.caption("Información orientativa para que llegues informado a tu consulta con el oncólogo.")
+    st.markdown("### Preguntas para tu oncólogo")
+    st.caption("Llega preparado a tu primera consulta. Estas son las preguntas clave según tu diagnóstico.")
 
-    # Pre-llenar desde Tab 1 si ya se buscó
     diag_t3 = st.session_state.get("diagnostico_usado", "")
     mod_nombre_t3 = st.session_state.get("modulo_nombre", "")
 
     if diag_t3:
-        st.info(f"Usando diagnóstico de la pestaña anterior: **{diag_t3}**")
+        st.info(f"Diagnóstico: **{diag_t3}**")
     else:
-        diag_t3 = st.text_area(
+        diag_t3 = st.text_input(
             "Diagnóstico",
             placeholder="Ej: Cáncer de cuello uterino estadio IIA",
-            height=80,
         )
         mod_nombre_t3 = ""
 
-    buscar_meds = st.button(
-        "💊 Ver medicamentos",
+    buscar_preguntas = st.button(
+        "❓ Generar preguntas",
         type="primary",
         disabled=not diag_t3.strip(),
     )
 
-    if buscar_meds:
-        if not os.environ.get("ANTHROPIC_API_KEY"):
-            st.warning(
-                "Se necesita la API key de Anthropic para esta función. "
-                "Agrégala en el archivo `.env` del proyecto."
+    if buscar_preguntas:
+        with st.spinner("Preparando tu lista de preguntas…"):
+            preguntas = obtener_preguntas(diag_t3.strip(), mod_nombre_t3)
+        st.session_state["preguntas"] = preguntas
+
+    if "preguntas" in st.session_state:
+        preguntas = st.session_state["preguntas"]
+        iconos = {
+            "diagnostico":  "🔬",
+            "tratamiento":  "💉",
+            "proceso_inen": "🏥",
+            "efectos":      "🛡️",
+            "seguimiento":  "📅",
+        }
+        for clave, label in CATEGORIAS_PREGUNTAS.items():
+            items = preguntas.get(clave, [])
+            if items:
+                with st.expander(f"{iconos.get(clave, '❓')} {label}", expanded=True):
+                    for q in items:
+                        st.markdown(f"- {q}")
+
+        st.info("💡 **Consejo:** Lleva estas preguntas anotadas o en tu celular. El especialista agradece pacientes preparados.")
+
+    st.divider()
+    st.caption(
+        "Las preguntas son generadas por IA como guía orientativa. "
+        "Tu médico oncólogo es quien puede responderte según tu caso específico.  \n"
+        "MediRuta · Proyecto final Data Science con Python · Universidad del Pacífico 2026-I"
+    )
+
+# ============================================================
+# TAB 4 — Medicamentos (DIGEMID + disponibilidad)
+# ============================================================
+with tab4:
+    st.markdown("### Busca tu medicamento")
+    st.caption("Verifica si está disponible en SIS o EsSalud antes de ir a la farmacia.")
+
+    modo_med = st.radio(
+        "Cómo quieres buscar:",
+        ["✍️ Escribir nombre", "📷 Foto de la receta"],
+        horizontal=True,
+        label_visibility="collapsed",
+    )
+
+    nombre_med = ""
+
+    if modo_med == "✍️ Escribir nombre":
+        col_m, col_b = st.columns([3, 1])
+        with col_m:
+            nombre_med = st.text_input(
+                "Nombre del medicamento",
+                placeholder="Ej: Paclitaxel, Tamoxifeno, Metotrexato…",
+                label_visibility="collapsed",
             )
-        else:
-            with st.spinner("Consultando información de medicamentos…"):
-                meds = obtener_medicamentos(diag_t3.strip(), mod_nombre_t3)
-            if meds:
-                st.session_state["meds"] = meds
+        with col_b:
+            buscar_med = st.button("🔍 Buscar", type="primary", use_container_width=True, disabled=not nombre_med.strip())
+    else:
+        receta_img = st.file_uploader(
+            "Sube la foto de tu receta (JPG / PNG)",
+            type=["jpg", "jpeg", "png", "webp"],
+            help="Solo se usa para leer el nombre del medicamento — no se almacena.",
+        )
+        buscar_med = False
+        if receta_img is not None:
+            st.image(receta_img, width=350)
+            with st.spinner("Leyendo receta…"):
+                nombre_med = extraer_medicamento_receta(receta_img.read())
+            if nombre_med:
+                st.success(f"Medicamento detectado: **{nombre_med}**")
+                buscar_med = st.button("🔍 Buscar disponibilidad", type="primary")
             else:
-                st.error("No se pudo obtener la información. Intenta de nuevo.")
+                st.error("No se pudo leer el medicamento. Intenta con el modo texto.")
 
-    if "meds" in st.session_state:
-        meds = st.session_state["meds"]
+    if buscar_med and nombre_med.strip():
+        with st.spinner(f"Consultando disponibilidad de {nombre_med}…"):
+            resultado_med = buscar_disponibilidad(nombre_med.strip())
+        if resultado_med:
+            st.session_state["resultado_med"] = resultado_med
+        else:
+            st.error("No se pudo obtener la información. Intenta de nuevo.")
 
-        # Disponibilidad y costo
-        disp = meds.get("disponibilidad_publica", "")
-        costo = meds.get("costo_referencial", "")
-        if disp or costo:
-            dc1, dc2 = st.columns(2)
-            with dc1:
-                color_disp = {"Sí": "🟢", "Parcial": "🟡", "No": "🔴"}.get(disp, "⚪")
-                st.metric("Disponibilidad en ESSALUD/SIS", f"{color_disp} {disp}")
-            with dc2:
-                st.metric("Costo referencial (particular)", costo or "—")
+    if "resultado_med" in st.session_state:
+        r = st.session_state["resultado_med"]
 
         st.markdown("---")
+        nombre_gen = r.get("nombre_generico", nombre_med)
+        en_pnume = r.get("en_pnume")
+        pnume_tag = "✅ En Petitorio PNUME" if en_pnume else ("⚠️ No está en el Petitorio PNUME" if en_pnume is False else "")
+        st.markdown(f"**{nombre_gen}** &nbsp; {pnume_tag}")
 
-        cat_meds = [
-            ("primera_linea",  "💉 Primera línea",  "Tratamiento estándar de primera elección"),
-            ("segunda_linea",  "🔄 Segunda línea",  "Alternativas si hay resistencia o intolerancia"),
-            ("soporte",        "🛡️ Soporte",         "Medicamentos para manejar efectos secundarios"),
-        ]
-        for clave, titulo, subtitulo in cat_meds:
-            items = meds.get(clave, [])
-            if items:
-                with st.expander(f"{titulo}", expanded=True):
-                    st.caption(subtitulo)
-                    for item in items:
-                        st.markdown(f"- {item}")
+        col_sis, col_ess = st.columns(2)
+        colores_disp = {
+            "Cubierto": "🟢",
+            "Parcialmente cubierto": "🟡",
+            "No cubierto": "🔴",
+        }
+        with col_sis:
+            sis = r.get("disponibilidad_sis", "Consultar en farmacia SIS")
+            ic = colores_disp.get(sis, "⚪")
+            st.metric("SIS", f"{ic} {sis}")
+        with col_ess:
+            ess = r.get("disponibilidad_essalud", "Consultar en farmacia EsSalud")
+            ic = colores_disp.get(ess, "⚪")
+            st.metric("EsSalud", f"{ic} {ess}")
 
-        if meds.get("nota_paciente"):
-            st.info(f"💬 **Para recordar:** {meds['nota_paciente']}")
+        if r.get("nota"):
+            st.info(f"💬 {r['nota']}")
+
+        st.markdown(
+            f"🔗 [Verificar en DIGEMID](https://www.digemid.minsa.gob.pe/main.asp?Seccion=845) · "
+            "Busca el nombre genérico en el buscador oficial del Ministerio de Salud."
+        )
+
+        st.markdown("---")
+        st.markdown("**Próximamente 🚧**")
+        col_p1, col_p2 = st.columns(2)
+        with col_p1:
+            st.markdown("📍 **Farmacia más cercana con stock**")
+            st.caption("Geolocalización + inventario en tiempo real")
+        with col_p2:
+            st.markdown("💰 **Precio referencial comparado**")
+            st.caption("Cadenas de farmacias vs. genérico disponible")
 
     st.divider()
     st.error(
-        "⚠️ **Esta información es solo orientativa.** Los medicamentos y dosis los define "
-        "exclusivamente el médico oncólogo según tu caso específico. No te automediques."
+        "⚠️ La disponibilidad mostrada es referencial. Confirma siempre con la farmacia del "
+        "INEN, SIS o EsSalud antes de acudir. No te automediques."
     )
     st.caption(
         "MediRuta · Proyecto final Data Science con Python · Universidad del Pacífico 2026-I"
