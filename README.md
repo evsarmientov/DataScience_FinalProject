@@ -4,6 +4,8 @@
 
 🔗 **App en vivo:** [mediruta.streamlit.app](https://mediruta.streamlit.app/)
 📁 **Repositorio:** [github.com/evsarmientov/DataScience_FinalProject](https://github.com/evsarmientov/DataScience_FinalProject)
+🎥 **Demo (laptop):** [Ver video](https://drive.google.com/file/d/1Sp6fKRLuyHnns4zumS65MOihRRKwUEwI/view?usp=sharing)
+📱 **Demo (móvil):** [Ver video](https://drive.google.com/file/d/1NbWkS21fo6JjOoaiLs_W1OSPdjwo8aAr/view?usp=sharing)
 
 ---
 
@@ -273,7 +275,8 @@ Folium · python-dotenv
 | App en vivo | ✅ Desplegada | [mediruta.streamlit.app](https://mediruta.streamlit.app/) |
 | Repositorio GitHub | ✅ Público | [github.com/evsarmientov/DataScience_FinalProject](https://github.com/evsarmientov/DataScience_FinalProject) |
 | Pitch deck | ✅ Completo | [`docs/pitch_deck.md`](docs/pitch_deck.md) |
-| Video demo | 🔗 *(agregar link aquí)* | — |
+| Video demo (laptop) | ✅ Grabado | [Ver en Drive](https://drive.google.com/file/d/1Sp6fKRLuyHnns4zumS65MOihRRKwUEwI/view?usp=sharing) |
+| Video demo (móvil) | ✅ Grabado | [Ver en Drive](https://drive.google.com/file/d/1NbWkS21fo6JjOoaiLs_W1OSPdjwo8aAr/view?usp=sharing) |
 | Validación usuarios | ✅ 5 usuarios | [`docs/research/01_validacion_usuarios.md`](docs/research/01_validacion_usuarios.md) |
 | Datos oficiales fuente | ✅ Incluidos | [`docs/tarifario_inen_2024.pdf`](docs/tarifario_inen_2024.pdf) |
 
