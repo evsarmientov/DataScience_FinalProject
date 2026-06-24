@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediRuta — Dossier YC-Style</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 11pt;
+    color: #1a1a1a;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 32px;
+    line-height: 1.55;
+}
+h1 {
+    background: #00509F;
+    color: white;
+    font-size: 26pt;
+    padding: 20px 28px;
+    margin: 0 -32px 24px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+.subtitle {
+    text-align: center;
+    font-size: 11pt;
+    color: #555;
+    margin-top: -16px;
+    margin-bottom: 24px;
+}
+h2 {
+    background: #00509F;
+    color: white;
+    font-size: 12pt;
+    padding: 7px 12px;
+    margin: 20px 0 10px;
+    border-radius: 3px;
+}
+h3 {
+    color: #00509F;
+    font-size: 11pt;
+    margin: 12px 0 6px;
+    border-bottom: 1px solid #c8d8f0;
+    padding-bottom: 3px;
+}
+p { margin: 6px 0; }
+ul, ol { padding-left: 20px; margin: 6px 0; }
+li { margin: 3px 0; }
+blockquote {
+    background: #f0f5fc;
+    border-left: 4px solid #00509F;
+    padding: 8px 14px;
+    margin: 10px 0;
+    font-style: italic;
+    color: #334;
+    border-radius: 2px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 10pt;
+}
+th {
+    background: #00509F;
+    color: white;
+    padding: 7px 10px;
+    text-align: left;
+    font-weight: 600;
+}
+td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #dde8f5;
+    vertical-align: top;
+}
+tr:nth-child(even) td { background: #f4f8ff; }
+code {
+    background: #f0f3f8;
+    font-family: 'Consolas', monospace;
+    font-size: 9pt;
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+pre {
+    background: #f0f3f8;
+    border: 1px solid #d0d8e8;
+    padding: 10px 14px;
+    font-family: 'Consolas', monospace;
+    font-size: 8.5pt;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 8px 0;
+    white-space: pre-wrap;
+}
+hr {
+    border: none;
+    border-top: 1px solid #d0dcea;
+    margin: 16px 0;
+}
+strong { color: #00509F; }
+.meta {
+    text-align: center;
+    color: #666;
+    font-size: 9.5pt;
+    margin-top: 32px;
+    padding-top: 12px;
+    border-top: 1px solid #dde;
+}
+@media print {
+    body { padding: 0; max-width: 100%; }
+    h1 { margin: 0 0 18px; }
+    h2 { page-break-after: avoid; }
+    table, blockquote { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<h1>MediRuta — Dossier YC-Style</h1>
+<p><strong>Data Science con Python 2026-I — Universidad del Pacífico</strong></p>
+<p><strong>Docente: Alexander Quispe</strong></p>
+
+<hr>
+
+<h2>1. One-liner</h2>
+
+<blockquote><strong>MediRuta le dice al paciente oncológico exactamente a qué módulo del INEN ir, qué documentos llevar y qué estudios tener listos — antes de salir de casa.</strong></blockquote>
+
+<hr>
+
+<h2>2. Founder</h2>
+
+<p><strong>SARMIENTO VASQUEZ, Evelyn Valeria</strong></p>
+<p>Estudiante de Economía, Universidad del Pacífico 2026-I.</p>
+
+<p><strong>Founder-market fit:</strong> Paciente activa del INEN (desde mayo de 2026). Vivió en primera persona el laberinto del sistema: diagnóstico tardío, rechazo por falta de documentos, desorientación dentro del hospital, desinformación sobre especialistas. MediRuta es la herramienta que necesité y no existía.</p>
+
+<p><strong>Cobertura de roles como solo founder con IA:</strong></p>
+<ul><li>Producto y diseño: decisiones propias basadas en experiencia real de usuario</li><li>Backend e ingeniería: Claude Code como CTO virtual — construyó y depuró el sistema de scraping, clasificador y API</li><li>Data Science: Claude API (haiku) para OCR, clasificación, generación de estudios y medicamentos</li><li>Frontend: Streamlit como framework de despliegue rápido</li></ul>
+
+<hr>
+
+<h2>3. Problema</h2>
+
+<p><strong>Quién lo sufre:</strong> Pacientes con diagnóstico oncológico reciente que deben atenderse en el INEN — muchos provenientes de provincias, con SIS, en su primer contacto con el sistema oncológico especializado. También sus familiares cuidadores.</p>
+
+<p><strong>Qué tan doloroso:</strong></p>
+<ul><li>Las colas en el INEN empiezan a las <strong>2:00 am</strong> (RPP Noticias)</li><li>Filas de <strong>5 cuadras</strong> desde las 4am (La República)</li><li>El propio Ministro de Salud declaró: <em>"cuando un paciente de regiones viene a Lima, termina al final de la cola, a sufrir o morir, porque el INEN está saturado"</em> (AP Noticias)</li><li>Pacientes rechazados por falta de <strong>un documento</strong> deben volver días después — con el mismo diagnóstico, el mismo miedo, y otro día perdido</li><li><strong>Confusión sobre seguros:</strong> pacientes no saben qué les cubre el SIS vs. EsSalud vs. pago particular antes de llegar. Un usuario beta preguntó explícitamente: <em>"dependiendo de si eres asegurado o no, qué opciones tienes y todo eso"</em> — nadie se lo ha explicado</li><li><strong>52.42%</strong> de cánceres en Perú son diagnosticados en estadio avanzado (MINSA/INEN) — la demora en el primer contacto con el especialista contribuye directamente a ese número</li></ul>
+
+<p><strong>Cómo lo resuelven hoy sin MediRuta:</strong></p>
+<ul><li>Preguntando en ventanilla (horario limitado, información a veces incorrecta)</li><li>Grupos de WhatsApp de pacientes (información no verificada, desactualizada)</li><li>Familiares que ya pasaron por el proceso (no siempre disponibles)</li><li>"Tramitadores" informales que cobran por orientar (aprovechan la desesperación)</li></ul>
+
+<p><strong>Evidencia documentada</strong> (<code>docs/research/</code>):</p>
+<ol><li>Validación con 5 usuarios reales — 3 generales + 2 familiares de pacientes oncológicos activos del INEN/IREN (evidencias en <code>docs/research/</code>)</li><li>Cobertura periodística: RPP, La República, AP Noticias — colas desde 2am</li><li>Globocan 2022: 72,827 nuevos casos/año, 35,934 muertes/año</li><li>SciELO Perú: barreras informacionales documentadas en sistema público limeño</li><li>CADE Salud 2026: diagnóstico oportuno como prioridad nacional</li></ol>
+
+<hr>
+
+<h2>4. Solución &amp; Insight</h2>
+
+<p><strong>Qué construye MediRuta exactamente:</strong></p>
+
+<p>Una app web con cuatro módulos:</p>
+
+<ul><li><strong>Tab 1 — Diagnóstico y Documentos:</strong> el paciente ingresa su diagnóstico en texto libre o sube una foto de su hoja de referencia. El clasificador híbrido identifica el módulo correcto del INEN (0–5). Un scraper en tiempo real trae los documentos necesarios desde el portal oficial. Claude genera los estudios clínicos que pedirá el especialista.</li></ul>
+
+<ul><li><strong>Tab 2 — Directorio médico:</strong> 159 médicos reales del INEN extraídos del Portal de Transparencia Institucional (Ley N°27806). Filtrables por módulo. Cargo verificado. No inventados.</li></ul>
+
+<ul><li><strong>Tab 3 — Preguntas para tu oncólogo:</strong> Claude genera las preguntas clave que el paciente debería hacerle al especialista en la primera consulta, organizadas por categoría: diagnóstico, tratamiento, proceso INEN, efectos secundarios, seguimiento. El paciente llega preparado, no desbordado.</li></ul>
+
+<ul><li><strong>Tab 4 — Medicamentos:</strong> el paciente escribe el nombre del medicamento o sube una foto de su receta (OCR). El sistema consulta disponibilidad en SIS y EsSalud, verifica si está en el Petitorio Nacional PNUME, y enlaza a DIGEMID. Sección "Próximamente": farmacia más cercana con stock y precio comparado.</li></ul>
+
+<p><strong>El insight no obvio:</strong></p>
+
+<blockquote>El problema no es <em>acceso</em> — es <em>orientación</em>. Un paciente que llega al módulo correcto con los documentos correctos se atiende en una visita. Un paciente desorientado pierde semanas de un tiempo que no tiene.</blockquote>
+
+<p>La desorientación no es un problema secundario: es el cuello de botella que convierte diagnósticos tempranos en tardíos. MediRuta no mejora la infraestructura del sistema — elimina la fricción del primer contacto.</p>
+
+<hr>
+
+<h2>5. Why Now?</h2>
+
+<p>Este producto no era posible hace 3 años:</p>
+
+<table><thead><tr><th>Tecnología</th><th>Por qué importa ahora</th></tr></thead><tbody><tr><td><strong>Claude API con visión (2024)</strong></td><td>OCR de hojas de referencia manuscritas por ~$0.001 por imagen. Antes requería PaddleOCR + modelo fine-tuned.</td></tr><tr><td><strong>Claude haiku (2024)</strong></td><td>Clasificación de especialidades médicas en lenguaje natural por ~$0.0005 por query. Viable sin financiamiento.</td></tr><tr><td><strong>pdfplumber (2022+)</strong></td><td>Extracción automática de tablas en PDFs gubernamentales sin OCR — el directorio médico del INEN vive en un PDF.</td></tr><tr><td><strong>Streamlit (2019+, maduro 2023)</strong></td><td>Una sola persona construye frontend completo desplegable en Streamlit Community Cloud en días, no semanas.</td></tr><tr><td><strong>Ley N°27806 — Portal de Transparencia</strong></td><td>El directorio médico oficial del INEN es público por ley. Con las herramientas de hoy se puede extraer y estructurar automáticamente.</td></tr><tr><td><strong>Tarifario Institucional INEN 2024 (RJ N°002-2024-J/INEN)</strong></td><td>El INEN publicó sus tarifas oficiales para 1,200+ procedimientos oncológicos, con costos diferenciados por SIS, EsSalud y pago privado. Por primera vez este dato es accesible y estructurable. Antes, nadie se lo comunicaba al paciente.</td></tr></tbody></table>
+
+<p>La combinación de datos abiertos + LLMs baratos + herramientas de despliegue rápido hace posible en 11 días lo que antes requería un equipo y meses.</p>
+
+<hr>
+
+<h2>6. Mercado</h2>
+
+<h3>TAM — Total Addressable Market</h3>
+<ul><li><strong>72,827</strong> nuevos casos de cáncer por año en Perú (Globocan 2022)</li><li><strong>185,000+</strong> personas viviendo con cáncer en los últimos 5 años</li><li>Incluyendo familias y cuidadores (~2 por paciente): <strong>~555,000 personas</strong> en contacto activo con el sistema oncológico cada año</li><li>Mercado institucional: ~50 hospitales con servicio oncológico en Perú → a S/500/mes = <strong>S/300,000/año</strong> solo en Perú</li><li>Expandido a Latinoamérica (sistemas públicos similares en Colombia, México, Argentina): <strong>10x</strong></li></ul>
+
+<h3>SAM — Serviceable Available Market</h3>
+<ul><li>INEN Lima: ~40,000 pacientes activos anuales</li><li>5 IRENEs regionales: ~15,000 pacientes adicionales</li><li>Total pacientes directamente servibles: <strong>~55,000/año</strong></li><li>Institucional directo: INEN + 5 IRENEs = 6 instituciones × S/499/mes = <strong>S/35,928/año</strong></li></ul>
+
+<h3>SOM — Serviceable Obtainable Market (12 meses)</h3>
+<ul><li><strong>10,000 usuarios activos</strong> (app web, gratuita)</li><li><strong>1 acuerdo institucional piloto</strong> (INEN o EsSalud Lima)</li><li>ARR objetivo año 1: <strong>S/6,000–12,000</strong></li></ul>
+
+<p><em>Fuentes: Globocan 2022 vía Infobae Perú (junio 2026), MINSA/INEN estadísticas institucionales.</em></p>
+
+<hr>
+
+<h2>7. Competencia y Moat</h2>
+
+<table><thead><tr><th>Alternativa</th><th>Orientación módulo</th><th>Documentos en tiempo real</th><th>Directorio verificado</th><th>24/7</th><th>Costo</th></tr></thead><tbody><tr><td>Ventanilla INEN</td><td>✓</td><td>✓</td><td>—</td><td>✗ lun-vie</td><td>Gratis</td></tr><tr><td>Portal web INEN</td><td>Parcial</td><td>Desactualizado</td><td>✗</td><td>✓</td><td>Gratis</td></tr><tr><td>Grupos WhatsApp pacientes</td><td>Informal</td><td>No verificado</td><td>✗</td><td>✓</td><td>Gratis</td></tr><tr><td>"Tramitador" informal</td><td>✓</td><td>✓</td><td>✗</td><td>Pagando</td><td>S/50–200</td></tr><tr><td><strong>MediRuta</strong></td><td><strong>✓ IA</strong></td><td><strong>✓ Tiempo real</strong></td><td><strong>✓ 159 médicos</strong></td><td><strong>✓</strong></td><td><strong>Gratis</strong></td></tr></tbody></table>
+
+<p><strong>Moat (qué nos hace difíciles de copiar):</strong></p>
+
+<ol><li><strong>Datos propios verificados:</strong> 159 médicos con cargos reales del portal de transparencia — no es un directorio inventado, es un activo de datos que requiere trabajo para construir y mantener actualizado.</li><li><strong>Clasificador híbrido resiliente:</strong> funciona con prefijos CIE-10 → keywords → Claude. El 80% de consultas se resuelven sin API key. Competidores que dependen solo de un LLM son frágiles.</li><li><strong>Confianza institucional:</strong> datos de fuente oficial (Ley N°27806). No somos un blog de salud — somos una herramienta basada en documentos públicos verificables.</li><li><strong>Founder-market fit irreplicable:</strong> no es un proyecto de clase. La founder es paciente activa del INEN y usuario real del producto.</li></ol>
+
+<hr>
+
+<h2>8. Producto — Demo y Arquitectura</h2>
+
+<p><strong>URL pública:</strong> https://mediruta.streamlit.app</p>
+<p><strong>Repositorio:</strong> https://github.com/evsarmientov/DataScience_FinalProject</p>
+
+<h3>Flujo principal del usuario</h3>
+<ol><li>Ingresa diagnóstico en texto libre o sube foto de hoja de referencia (OCR)</li><li>Clasificador híbrido identifica: <strong>Módulo 1 — Cabeza, Cuello y Tórax</strong></li><li>Scraper trae en tiempo real los documentos del portal INEN</li><li>Claude genera los estudios que pedirá el especialista (imagen, patología, laboratorio)</li><li>Tab 2: directorio filtrado por módulo — 159 médicos reales con cargo verificado</li><li>Tab 3: preguntas clave para hacerle al oncólogo en la primera consulta</li><li>Tab 4: busca medicamento por nombre o foto de receta → disponibilidad SIS/EsSalud + DIGEMID</li></ol>
+
+<h3>Diagrama de arquitectura</h3>
+
+<pre><code>┌─────────────────────────────────────────────────────────┐
+│                    USUARIO (navegador)                  │
+└───────────────────────┬─────────────────────────────────┘
+                        │ HTTPS
+┌───────────────────────▼─────────────────────────────────┐
+│           STREAMLIT FRONTEND  (frontend/app.py)         │
+│                                                         │
+│  ┌──────────────┐ ┌────────────┐ ┌────────────┐ ┌────────┐│
+│  │ Tab 1        │ │ Tab 2      │ │ Tab 3      │ │ Tab 4  ││
+│  │ Diagnóstico  │ │ Médicos    │ │ Preguntas  │ │ Medic. ││
+│  │ + Documentos │ │ del INEN   │ │ Oncólogo   │ │        ││
+│  └──────┬───────┘ └─────┬──────┘ └─────┬──────┘ └───┬────┘│
+└─────────┼───────────────┼──────────────┼─────────────┼─────┘
+          │               │              │             │
+┌─────────▼───────────────▼──────────────▼─────────────▼─────┐
+│                      AI LAYER  (ai/)                        │
+│                                                             │
+│  ┌───────────────┐  ┌──────────────────────────────────┐   │
+│  │ ocr_extractor │  │  motor_especialidad.py           │   │
+│  │ (Claude Vision│  │  1. Prefijos CIE-10 (sin API)    │   │
+│  │  + PyMuPDF)   │  │  2. Keywords (sin API)           │   │
+│  └───────┬───────┘  │  3. Claude haiku (fallback)      │   │
+│          │          └──────────────┬───────────────────┘   │
+│  ┌───────▼──────────────────────────▼──────────────────┐   │
+│  │  estudios_extractor.py   preguntas_extractor.py     │   │
+│  │  medicamentos_search.py                             │   │
+│  │  (Claude haiku — JSON estructurado)                 │   │
+│  └───────────────────────────────────────────────────┬─┘   │
+└──────────────────────────────────────────────────────┼───┘
+                                                       │
+┌──────────────────────────────────────────────────────▼───┐
+│                   CLAUDE API (Anthropic)                  │
+│              claude-haiku-4-5-20251001                   │
+└──────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────┐
+│                    DATA LAYER  (data/)                   │
+│                                                          │
+│  medicos_inen.json         inen_modulos.json             │
+│  (159 médicos reales)      (5 módulos + keywords)        │
+│  Fuente: PDF Transparencia  estudios_por_modulo.json     │
+│  INEN — Ley N°27806        (fallback sin API)            │
+└───────────┬──────────────────────────────────────────────┘
+            │ Origen de los datos
+┌───────────▼──────────────────────────────────────────────┐
+│                  SCRAPING LAYER (backend/)               │
+│                                                          │
+│  requisitos_scraper.py          medicos_scraper.py       │
+│  requests + BeautifulSoup       pdfplumber + PyMuPDF     │
+│  → portal.inen.sld.pe           + Selenium               │
+│  → essalud.gob.pe               → PDF Transparencia INEN │
+│  (documentos en tiempo real)    (extracción directorio)  │
+└──────────────────────────────────────────────────────────┘</code></pre>
+
+<h3>Modelos e IAs usados</h3>
+
+<table><thead><tr><th>Modelo / Herramienta</th><th>Uso</th><th>Por qué</th></tr></thead><tbody><tr><td>Claude claude-haiku-4-5-20251001</td><td>OCR hojas médicas, clasificación fallback, estudios clínicos, medicamentos</td><td>Costo ~$0.001/query, contexto largo, JSON estructurado confiable</td></tr><tr><td>pdfplumber</td><td>Extracción de tablas del PDF de transparencia INEN</td><td>Detección automática de columnas en PDFs gubernamentales con texto seleccionable</td></tr><tr><td>PyMuPDF (fitz)</td><td>Inspección de coordenadas del PDF</td><td>Complemento a pdfplumber para PDFs complejos</td></tr><tr><td>Selenium headless</td><td>Detección de estructura del portal INEN (JS-rendered)</td><td>El portal usa DSLC page builder — el contenido no está en el HTML estático</td></tr><tr><td>Folium</td><td>Mapa interactivo de la ubicación del INEN</td><td>Geolocalización del hospital con marcador del módulo destino</td></tr></tbody></table>
+
+<hr>
+
+<h2>9. Modelo de Negocio y Pricing</h2>
+
+<p><strong>Tres líneas de ingresos:</strong></p>
+
+<h3>Línea 1 — Paciente: Freemium</h3>
+
+<p>El paciente elige. Lo esencial es gratis; las herramientas de acompañamiento continuo son de pago.</p>
+
+<table><thead><tr><th>Feature</th><th>Gratis</th><th>Premium S/9.90/mes</th></tr></thead><tbody><tr><td>Clasificador de módulo INEN</td><td>✓</td><td>✓</td></tr><tr><td>Documentos de admisión en tiempo real</td><td>✓</td><td>✓</td></tr><tr><td>Directorio médico (159 médicos)</td><td>✓</td><td>✓</td></tr><tr><td>Estudios clínicos por IA</td><td>✓</td><td>✓</td></tr><tr><td>Preguntas para el oncólogo (Tab 3)</td><td>—</td><td>✓</td></tr><tr><td>Búsqueda de medicamentos + PNUME</td><td>—</td><td>✓</td></tr><tr><td>Guía de costos por seguro (SIS/EsSalud)</td><td>—</td><td>✓</td></tr><tr><td>Historial de consultas guardadas</td><td>—</td><td>✓</td></tr></tbody></table>
+
+<p><em>Hipótesis conservadora: 1–2% de conversión de usuarios activos a pago.</em></p>
+
+<h3>Línea 2 — Institucional: SaaS B2B</h3>
+
+<table><thead><tr><th></th><th><strong>Plan Clínica</strong></th><th><strong>Plan Red</strong></th></tr></thead><tbody><tr><td><strong>Precio</strong></td><td>S/499/mes</td><td>S/1,499/mes</td></tr><tr><td>API de integración en portal propio</td><td>✓</td><td>✓</td></tr><tr><td>Analytics de uso y derivaciones</td><td>✓</td><td>✓</td></tr><tr><td>Soporte dedicado</td><td>—</td><td>✓</td></tr><tr><td>Multi-sede (hasta 5)</td><td>—</td><td>✓</td></tr><tr><td>Chatbot WhatsApp / Telegram</td><td>—</td><td>✓</td></tr><tr><td><strong>Para</strong></td><td>INEN, EsSalud, IRENEs</td><td>Redes regionales, EPS, aseguradoras</td></tr></tbody></table>
+
+<p><em>Ciclo de venta B2B en salud pública: 12–18 meses (procurement + firma). No es ingreso inmediato.</em></p>
+
+<h3>Línea 3 — Publicidad segmentada</h3>
+
+<p>Anuncios de actores relevantes en el flujo oncológico — <strong>no publicidad genérica</strong>. El usuario ya está buscando atención; los anunciantes llegan en el momento exacto.</p>
+
+<table><thead><tr><th>Anunciante potencial</th><th>Formato</th><th>Por qué pagarían</th></tr></thead><tbody><tr><td>EPS privadas (Rímac, Pacífico, Mapfre)</td><td>Banner + CTA en guía de seguros</td><td>Paciente oncológico = cliente de alto valor</td></tr><tr><td>Clínicas privadas oncológicas</td><td>Tarjeta patrocinada en Tab 2</td><td>Captación directa de pacientes activos</td></tr><tr><td>Farmacias (Inkafarma, MiFarmacias)</td><td>Resultado destacado en Tab 4</td><td>Tráfico de alta intención por medicamento</td></tr></tbody></table>
+
+<p><em>Riesgo: requiere volumen (mínimo ~10,000 usuarios activos/mes para ser atractivo para anunciantes).</em></p>
+
+<hr>
+
+<h3>Estructura de costos — estimación pesimista</h3>
+
+<table><thead><tr><th>Rubro</th><th>Estimado mensual</th><th>Supuesto</th></tr></thead><tbody><tr><td>Claude API (10,000 usuarios × 8 queries avg.)</td><td>~S/1,200</td><td>$0.002/query real (OCR + features complejos son más caros que el haiku base)</td></tr><tr><td>Hosting + infraestructura</td><td>S/300–500</td><td>Streamlit Cloud free → upgrade necesario con escala</td></tr><tr><td>Legal / compliance médico</td><td>S/500</td><td>Asesoría por la naturaleza del producto (salud + datos)</td></tr><tr><td>Soporte / mantenimiento</td><td>S/1,000</td><td>Bug fixes, actualizaciones de datos INEN</td></tr><tr><td><strong>Total costos fijos estimados</strong></td><td><strong>~S/3,000–3,200/mes</strong></td><td>—</td></tr></tbody></table>
+
+<p><strong>Break-even con solo la línea B2B:</strong> 7 clientes institucionales a S/499/mes.</p>
+<p><strong>Break-even mixto realista (ads + premium + 2 instituciones):</strong> ~18–24 meses desde el lanzamiento.</p>
+
+<p><em>El margen "90%" anterior ignoraba soporte, legal y mantenimiento. Con costos completos, el margen neto en institucional baja a ~60–70%.</em></p>
+
+<hr>
+
+<h2>10. Go-to-Market</h2>
+
+<p><strong>Primeros 10 usuarios:</strong></p>
+<ul><li>Red personal de la founder + compartir en grupos de WhatsApp de pacientes oncológicos del INEN</li><li>Post en páginas de Facebook: "Liga Peruana de Lucha contra el Cáncer" (comunidades activas de pacientes)</li></ul>
+
+<p><strong>Primeros 100 usuarios:</strong></p>
+<ul><li>Flyer con QR en sala de espera del INEN</li><li>Recomendación de trabajadoras sociales del hospital (canal de confianza para pacientes)</li><li>Paciente-influencer en comunidades de sobrevivientes de cáncer en redes</li></ul>
+
+<p><strong>Primeros 1,000 usuarios:</strong></p>
+<ul><li>Partnership con Liga contra el Cáncer / comunicaciones del INEN</li><li>Nota de prensa en RPP Salud / Infobae Perú (ya cubrieron el problema — la solución es la continuación natural)</li><li>SEO orgánico: búsquedas de alta intención como <em>"qué documentos llevar al INEN"</em>, <em>"módulos del INEN cómo funciona"</em></li></ul>
+
+<p><strong>Primeros contratos institucionales:</strong></p>
+<ul><li>Presentar directamente al área de admisión del INEN como piloto gratuito (reducción de rechazos = interés alineado)</li><li>EsSalud Prestaciones Oncológicas — propuesta de integración en portal del asegurado</li></ul>
+
+<hr>
+
+<h2>11. Tracción y Señales Tempranas</h2>
+
+<table><thead><tr><th>Evidencia</th><th>Detalle</th></tr></thead><tbody><tr><td>App en vivo</td><td>mediruta.streamlit.app — accesible sin instalación desde el día del deploy</td></tr><tr><td><strong>5 usuarios beta</strong></td><td>3 usuarios generales + 2 familiares de pacientes oncológicos reales del INEN/IREN (llamada y presencial)</td></tr><tr><td>Validación de contenido</td><td>Familiares de pacientes confirmaron que la información coincide con lo que aprendieron via meses de experiencia — <em>"esa información nos tomó semanas descubrirla"</em></td></tr><tr><td>Bug de UX detectado y corregido</td><td>2 de 5 usuarios identificaron el mismo problema de layout de forma independiente → corregido en v1.1</td></tr><tr><td>Señal de roadmap orgánica</td><td>2 usuarios mencionaron expansión a IRENEs regionales sin que se les preguntara — ya en roadmap a 6 meses</td></tr><tr><td>159 médicos verificados</td><td>Único directorio médico del INEN con cargos reales y fuente oficial verificable</td></tr><tr><td>Founder es usuaria real</td><td>El diagnóstico real de la founder clasifica correctamente en el sistema</td></tr><tr><td>Historial de commits</td><td>Commits distribuidos durante los 11 días del proyecto (no un solo push el último día)</td></tr><tr><td>Tarifario INEN 2024 ya en poder del equipo</td><td>Resolución Jefatural N°002-2024-J/INEN — 1,200+ procedimientos con costos por SIS, EsSalud y privado. Fuente oficial identificada, lista para integrar en el módulo de seguros del roadmap.</td></tr></tbody></table>
+
+<hr>
+
+<h2>12. Roadmap</h2>
+
+<table><thead><tr><th>Horizonte</th><th>Hito</th></tr></thead><tbody><tr><td><strong>3 meses</strong></td><td>Integración con registro CMP (número de colegiatura verificado), 1,000 usuarios activos, piloto gratuito con equipo de admisión del INEN</td></tr><tr><td><strong>6 meses</strong></td><td><strong>Módulo de seguros:</strong> "¿cuánto te cuesta este procedimiento con tu seguro?" — usando el Tarifario INEN 2024 ya identificado (1,200+ procedimientos, costos SIS / EsSalud / privado). Expansión a IREN Norte y IREN Sur. Primer contrato institucional pagado. 5,000 usuarios activos.</td></tr><tr><td><strong>12 meses</strong></td><td>5 hospitales integrados, chatbot WhatsApp, cobertura nacional de tarifas por seguro (EsSalud, SIS, EPS privadas), 20,000 usuarios, seed round con UTEC Ventures o Wayra</td></tr></tbody></table>
+
+<hr>
+
+<h2>13. Riesgos y Mitigación</h2>
+
+<p><strong>Riesgo 1 — Regulatorio</strong></p>
+<p>MINSA podría exigir certificación como dispositivo médico de apoyo clínico o restringir el uso de datos del portal de transparencia.</p>
+<p><em>Mitigación:</em> todos los datos provienen de la Ley N°27806 (mandato de transparencia pública). La app es herramienta orientativa, no diagnóstico médico — el disclaimer es explícito y visible en cada sesión. No almacenamos datos de pacientes.</p>
+
+<p><strong>Riesgo 2 — Costos operativos y API</strong></p>
+<p>Los costos reales de operar no son solo la API: hosting, legal, mantenimiento y soporte suman ~S/3,000–3,200/mes a 10,000 usuarios. La línea de ingresos B2B tarda 12–18 meses en materializarse en salud pública.</p>
+<p><em>Mitigación:</em> el clasificador híbrido resuelve el 80% de consultas sin llamar a la API (reduce costos ~50%). El modelo de 3 líneas de ingreso (freemium + B2B + ads) diversifica el riesgo de depender solo de contratos institucionales. Break-even mixto proyectado: 18–24 meses.</p>
+
+<p><strong>Riesgo 3 — Adopción institucional lenta</strong></p>
+<p>Los hospitales públicos peruanos tienen procesos de compra B2G que pueden tomar 12–24 meses.</p>
+<p><em>Mitigación:</em> la app funciona y genera valor sin integración institucional. El B2C gratuito construye tracción y prueba de concepto. El contrato institucional es el objetivo de monetización, no el prerequisito para existir.</p>
+
+<hr>
+
+<h2>14. The Ask</h2>
+
+<blockquote>"Si tuviera 30 segundos con un inversionista de YC:"</blockquote>
+
+<p><strong>Pedimos S/30,000 (~$8,000 USD) para 12 meses de runway.</strong></p>
+
+<table><thead><tr><th>Destino</th><th>Monto</th><th>Detalle</th></tr></thead><tbody><tr><td>Operaciones + API (12 meses)</td><td>S/12,000</td><td>Hosting, API Claude, mantenimiento — ~S/1,000/mes estimado conservador</td></tr><tr><td>Legal y compliance médico</td><td>S/8,000</td><td>Asesoría por modelo de datos de salud + disclaimer + TyC</td></tr><tr><td>Desarrollo módulo seguros + API institucional</td><td>S/8,000</td><td>Integración Tarifario INEN 2024, endpoints B2B</td></tr><tr><td>Marketing y adquisición inicial</td><td>S/2,000</td><td>Flyers QR, comunidades pacientes, primeras campañas</td></tr></tbody></table>
+
+<p><strong>Por qué S/30,000 y no más:</strong></p>
+<p>El producto ya existe y está desplegado. No necesitamos construir desde cero — necesitamos tiempo para que los ciclos de venta B2B (12–18 meses en salud pública) se materialicen mientras el B2C y los ads generan ingresos tempranos.</p>
+
+<p><strong>Milestone que desbloquea la siguiente ronda:</strong></p>
+<p>10,000 usuarios activos verificados + 1 contrato institucional firmado (INEN o EsSalud) → base para seed de S/150,000 con UTEC Ventures, Wayra o NXTP.</p>
+
+<hr>
+
+<p><em>Repositorio: github.com/evsarmientov/DataScience_FinalProject</em></p>
+<p><em>Demo: mediruta.streamlit.app</em></p>
+<p><em>Evelyn Valeria Sarmiento Vasquez — ev.sarmientov@alum.up.edu.pe</em></p>
+<div class="meta">
+  Data Science con Python 2026-I &nbsp;·&nbsp; Universidad del Pacífico<br>
+  Docente: Alexander Quispe &nbsp;·&nbsp; Evelyn Valeria Sarmiento Vasquez
+</div>
+</body>
+</html>
