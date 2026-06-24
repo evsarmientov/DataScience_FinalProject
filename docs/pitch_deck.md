@@ -34,6 +34,7 @@ Estudiante de Economía, Universidad del Pacífico 2026-I.
 - Filas de **5 cuadras** desde las 4am (La República)
 - El propio Ministro de Salud declaró: *"cuando un paciente de regiones viene a Lima, termina al final de la cola, a sufrir o morir, porque el INEN está saturado"* (AP Noticias)
 - Pacientes rechazados por falta de **un documento** deben volver días después — con el mismo diagnóstico, el mismo miedo, y otro día perdido
+- **Confusión sobre seguros:** pacientes no saben qué les cubre el SIS vs. EsSalud vs. pago particular antes de llegar. Un usuario beta preguntó explícitamente: *"dependiendo de si eres asegurado o no, qué opciones tienes y todo eso"* — nadie se lo ha explicado
 - **52.42%** de cánceres en Perú son diagnosticados en estadio avanzado (MINSA/INEN) — la demora en el primer contacto con el especialista contribuye directamente a ese número
 
 **Cómo lo resuelven hoy sin MediRuta:**
@@ -84,6 +85,7 @@ Este producto no era posible hace 3 años:
 | **pdfplumber (2022+)** | Extracción automática de tablas en PDFs gubernamentales sin OCR — el directorio médico del INEN vive en un PDF. |
 | **Streamlit (2019+, maduro 2023)** | Una sola persona construye frontend completo desplegable en Streamlit Community Cloud en días, no semanas. |
 | **Ley N°27806 — Portal de Transparencia** | El directorio médico oficial del INEN es público por ley. Con las herramientas de hoy se puede extraer y estructurar automáticamente. |
+| **Tarifario Institucional INEN 2024 (RJ N°002-2024-J/INEN)** | El INEN publicó sus tarifas oficiales para 1,200+ procedimientos oncológicos, con costos diferenciados por SIS, EsSalud y pago privado. Por primera vez este dato es accesible y estructurable. Antes, nadie se lo comunicaba al paciente. |
 
 La combinación de datos abiertos + LLMs baratos + herramientas de despliegue rápido hace posible en 11 días lo que antes requería un equipo y meses.
 
@@ -282,6 +284,7 @@ La combinación de datos abiertos + LLMs baratos + herramientas de despliegue r�
 | 159 médicos verificados | Único directorio médico del INEN con cargos reales y fuente oficial verificable |
 | Founder es usuaria real | El diagnóstico real de la founder clasifica correctamente en el sistema |
 | Historial de commits | Commits distribuidos durante los 11 días del proyecto (no un solo push el último día) |
+| Tarifario INEN 2024 ya en poder del equipo | Resolución Jefatural N°002-2024-J/INEN — 1,200+ procedimientos con costos por SIS, EsSalud y privado. Fuente oficial identificada, lista para integrar en el módulo de seguros del roadmap. |
 
 ---
 
@@ -290,8 +293,8 @@ La combinación de datos abiertos + LLMs baratos + herramientas de despliegue r�
 | Horizonte | Hito |
 |---|---|
 | **3 meses** | Integración con registro CMP (número de colegiatura verificado), 1,000 usuarios activos, piloto gratuito con equipo de admisión del INEN |
-| **6 meses** | Expansión a IREN Norte y IREN Sur, módulo EsSalud oncología, 5,000 usuarios activos, primer contrato institucional pagado |
-| **12 meses** | 5 hospitales integrados, chatbot WhatsApp vía OpenClaw, guía por tipo de seguro (SIS / EsSalud / particular), 20,000 usuarios, seed round |
+| **6 meses** | **Módulo de seguros:** "¿cuánto te cuesta este procedimiento con tu seguro?" — usando el Tarifario INEN 2024 ya identificado (1,200+ procedimientos, costos SIS / EsSalud / privado). Expansión a IREN Norte y IREN Sur. Primer contrato institucional pagado. 5,000 usuarios activos. |
+| **12 meses** | 5 hospitales integrados, chatbot WhatsApp, cobertura nacional de tarifas por seguro (EsSalud, SIS, EPS privadas), 20,000 usuarios, seed round con UTEC Ventures o Wayra |
 
 ---
 
