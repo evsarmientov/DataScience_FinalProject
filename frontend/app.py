@@ -52,7 +52,6 @@ MODULO_ETIQUETAS = {
 }
 
 
-@st.cache_data(show_spinner=False)
 def cargar_tarifario() -> list[dict]:
     path = Path(__file__).parent.parent / "data" / "tarifario_inen_2024.json"
     if not path.exists():
