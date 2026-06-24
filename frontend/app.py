@@ -52,7 +52,6 @@ MODULO_ETIQUETAS = {
 }
 
 
-@st.cache_data(show_spinner=False)
 def cargar_tarifario() -> list[dict]:
     path = Path(__file__).parent.parent / "data" / "tarifario_inen_2024.json"
     if not path.exists():
@@ -345,14 +344,14 @@ with tab1:
         st.warning("⚠️ Lista orientativa. El médico puede pedir estudios adicionales.")
 
         # Tarifario — costos por seguro
-        st.markdown("---")
-        st.markdown("#### 💰 ¿Cuánto cuesta un procedimiento con tu seguro?")
-        st.caption(
-            "Tarifario Institucional INEN 2024 · costos oficiales diferenciados por SIS, EsSalud y privado. "
-            "Fuente: RJ N°002-2024-J/INEN."
-        )
         tarifario = cargar_tarifario()
         if tarifario:
+            st.markdown("---")
+            st.markdown("#### 💰 ¿Cuánto cuesta un procedimiento con tu seguro?")
+            st.caption(
+                "Tarifario Institucional INEN 2024 · costos oficiales diferenciados por SIS, EsSalud y privado. "
+                "Fuente: RJ N°002-2024-J/INEN."
+            )
             col_proc, col_btn_proc = st.columns([4, 1])
             with col_proc:
                 query_proc = st.text_input(
