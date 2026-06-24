@@ -18,6 +18,7 @@ data/*.json
 !data/inen_modulos.json
 !data/estudios_por_modulo.json
 !data/medicos_inen.json
+!data/tarifario_inen_2024.json
 
 # Editor / OS
 .vscode/
