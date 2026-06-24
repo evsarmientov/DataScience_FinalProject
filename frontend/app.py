@@ -53,6 +53,14 @@ MODULO_ETIQUETAS = {
 
 
 @st.cache_data(show_spinner=False)
+def cargar_tarifario() -> list[dict]:
+    path = Path(__file__).parent.parent / "data" / "tarifario_inen_2024.json"
+    if not path.exists():
+        return []
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+@st.cache_data(show_spinner=False)
 def cargar_medicos() -> list[dict]:
     path = Path(__file__).parent.parent / "data" / "medicos_inen.json"
     with open(path, encoding="utf-8") as f:
@@ -335,6 +343,66 @@ with tab1:
         if estudios.get("nota"):
             st.info(f"💬 **Consejo:** {estudios['nota']}")
         st.warning("⚠️ Lista orientativa. El médico puede pedir estudios adicionales.")
+
+        # Tarifario — costos por seguro
+        st.markdown("---")
+        st.markdown("#### 💰 ¿Cuánto cuesta un procedimiento con tu seguro?")
+        st.caption(
+            "Tarifario Institucional INEN 2024 · costos oficiales diferenciados por SIS, EsSalud y privado. "
+            "Fuente: RJ N°002-2024-J/INEN."
+        )
+        tarifario = cargar_tarifario()
+        if tarifario:
+            col_proc, col_btn_proc = st.columns([4, 1])
+            with col_proc:
+                query_proc = st.text_input(
+                    "Procedimiento",
+                    placeholder="Ej: biopsia, tomografía, quimioterapia, cirugía…",
+                    label_visibility="collapsed",
+                    key="query_proc",
+                )
+            with col_btn_proc:
+                buscar_proc = st.button(
+                    "🔍 Buscar",
+                    key="btn_proc",
+                    use_container_width=True,
+                    disabled=not (query_proc or "").strip(),
+                )
+
+            if buscar_proc and query_proc.strip():
+                q = query_proc.strip().lower()
+                encontrados = [
+                    p for p in tarifario
+                    if q in (p.get("descripcion") or "").lower()
+                ][:8]
+                st.session_state["resultados_proc"] = encontrados
+                st.session_state["query_proc_usado"] = query_proc.strip()
+
+            if "resultados_proc" in st.session_state:
+                resultados_proc = st.session_state["resultados_proc"]
+                if not resultados_proc:
+                    st.info("No se encontraron procedimientos. Prueba: 'biopsia', 'cirugía', 'tomografía', 'resonancia'…")
+                else:
+                    st.caption(f"{len(resultados_proc)} resultado(s) para **{st.session_state['query_proc_usado']}**")
+
+                    def fmt_precio(val):
+                        return f"S/ {val}" if val and str(val) not in ("null", "None", "") else "—"
+
+                    for p in resultados_proc:
+                        with st.expander(f"📋 {p['descripcion']}", expanded=(len(resultados_proc) == 1)):
+                            c1, c2, c3, c4 = st.columns(4)
+                            c1.metric("SIS", fmt_precio(p.get("tarifa_sis")))
+                            c2.metric("EsSalud / FFAA", fmt_precio(p.get("essalud_ffaa_pnp")))
+                            c3.metric("Privado (IAFA)", fmt_precio(p.get("privado_iafa")))
+                            c4.metric("Tarifa ref.", fmt_precio(p.get("tarifa_referencial")))
+                            detalles = []
+                            if p.get("especialidad"):
+                                detalles.append(f"Especialidad: {p['especialidad']}")
+                            if p.get("codigo_inen"):
+                                detalles.append(f"Código INEN: {p['codigo_inen']}")
+                            if detalles:
+                                st.caption(" · ".join(detalles))
+                    st.caption("Fuente: Tarifario Institucional Integrado INEN 2024 · RJ N°002-2024-J/INEN · Enero 2024")
 
         st.divider()
         st.caption(
